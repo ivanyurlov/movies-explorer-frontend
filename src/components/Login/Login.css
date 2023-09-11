@@ -154,6 +154,10 @@
   padding: 14px 14px;
 }
 
+.login__input:focus {
+  outline: none;
+}
+
 .login__input_modify {
   width: 85%;
   background: #FFFFFF;
@@ -217,12 +221,14 @@
 }
 
 .login__save-button_disabled {
-  background: #FFFFFF;
-  color: #FF6838;
-  border: 1px solid #FF6838;
-  opacity: 0.7;
+  background: #F8F8F8;
+  color: #C2C2C2;
   cursor: default;
   transition: none;
+}
+
+.login__save-button_disabled:hover {
+  opacity: 1;
 }
 
 .login__save-button_modify {
@@ -236,44 +242,76 @@
 }
 
 .login__save-button_edit {
+  margin: 20px 0 0;
+}
+
+@media (max-width: 520px) {
+  .login__save-button_edit {
+    margin: 180px 0 0;
+  }
+}
+
+.login__button {
+  background: #FF6838;
+  border: none;
+  border-radius: 3px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #FFFFFF;
+  cursor: pointer;
+  margin: 20px 0 0;
+  padding: 14px 125px;
+  transition: opacity 0.3s linear;
+}
+
+.login__button:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 520px) {
+  .login__button {
+    font-size: 12px;
+    line-height: 14px;
+    margin: 108px 0 0;
+    padding: 14px 67px;
+  }
+}
+
+.login__button_disabled {
+  background: #F8F8F8;
+  color: #C2C2C2;
+  cursor: default;
+  transition: none;
+}
+
+.login__button_disabled:hover {
+  opacity: 1;
+}
+
+.login__button_edit {
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
   color: #000000;
   background: #FFFFFF;
-  margin: 193px 0 0;
+  margin: 20px 0 0;
   padding: 0;
 }
 
 @media (max-width: 850px) {
-  .login__save-button_edit {
-    margin: 185px 0 0;
+  .login__button_edit {
+    margin: 10px 0 0;
   }
 }
 
 @media (max-width: 520px) {
-  .login__save-button_edit {
+  .login__button_edit {
     font-size: 12px;
     line-height: 14px;
-    margin: 348px 0 0;
-  }
-}
-
-.login__save-button_signout {
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  color: #EE3465;
-  background: #FFFFFF;
-  text-decoration: none;
-  margin: 16px 0 0;
-  padding: 0;
-}
-
-@media (max-width: 520px) {
-  .login__save-button_signout {
-    font-size: 12px;
-    line-height: 14px;
+    margin: 178px 0 0;
   }
 }
 
@@ -299,9 +337,49 @@
   color: #FF6838;
   text-decoration: none;
   margin: 0 0 0 6px;
+  padding: 0;
   transition: opacity 0.3s linear;
 }
 
 .login__link:hover {
   opacity: 0.7;
+}
+
+.login__link_signout {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #EE3465;
+  margin: 16px 0 0;
+}
+
+@media (max-width: 520px) {
+  .login__link_signout {
+    font-size: 12px;
+    line-height: 14px;
+  }
+}
+
+.login__edit-error {
+  display: block;
+  text-align: center;
+  margin: 160px 0 0;
+  padding: 0;
+}
+
+.login__edit-error_hidden {
+  box-sizing: border-box;
+  min-height: 13px;
+}
+
+.login__edit-error_visible {
+  min-height: 13px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: #EE3465;
+  display: block;
 }

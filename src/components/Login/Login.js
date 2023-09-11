@@ -20,7 +20,8 @@ function Login(props) {
             //onChange={handleChange} 
             id="email" 
             autoComplete="off" 
-            type="email" name="email" 
+            type="email" name="email"
+            placeholder="E-mail" 
             required 
           />
           <span className="login__input-error login__input-error_hidden"></span>
@@ -31,11 +32,13 @@ function Login(props) {
             //onChange={handleChange} 
             id="password" 
             autoComplete="off" 
-            type="password" name="password" 
+            type="password" name="password"
+            placeholder="Пароль"
+            minLength="6"
             required 
           />
           <span className="login__input-error login__input-error_visible">Что-то пошло не так</span>
-          <button className="login__save-button login__save-button_modify" type="submit">Войти</button>
+          <button className={`login__save-button login__save-button_modify ${!props.isValid ? "login__save-button_disabled" : ""}`} type="submit">Войти</button>
         </form>
         <p className="login__caption">
           Ещё не зарегистрированы?

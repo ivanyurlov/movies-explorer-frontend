@@ -8,7 +8,7 @@
   margin: 0 auto;
   padding: 0;
   background-color: #FFFFFF;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', 'Arial', sans-serif;
   color: #000000;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

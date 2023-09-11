@@ -68,6 +68,10 @@
   padding: 0 0 0 22px;
 }
 
+.search__input {
+  outline: none;
+}
+
 @media (max-width: 520px) {
   .search__input {
     font-size: 11px;
@@ -140,7 +144,8 @@
   border-radius: 50%;
   left: 2px;
   bottom: 2px;
-  background: #FFFFFF;
+  background: #F5F5F5;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .search__checkbox:checked + .search__slider {

@@ -15,7 +15,7 @@ function MoviesCard(props) {
       <div className="movie__info">
         <div className="movie__like">
           <h2 className="movie__title">{props.movie.nameRU}</h2>
-          <button className={`movie__button ${location.pathname === "/saved-movies" ? "movie__button_delete" : "" }`} type="button"></button>
+          <button className={`movie__button movie__button_save ${location.pathname === "/saved-movies" ? "movie__button_delete" : "" }`} type="button"></button>
         </div>
         <p className="movie__duration">{props.movie.duration}</p>
       </div>

@@ -8,7 +8,7 @@ function Navigation(props) {
 
   return (
     <>
-      {props.loggedIn ? (<nav className="navigation">
+      {!props.loggedIn ? (<nav className="navigation">
         <div className="navigation__container">
           <div className="navigation__links">
             <Link to="/movies" className={`navigation__link navigation__link_modify ${location.pathname !== "/" ? "navigation__link_theme_white" : ""}`}>Фильмы</Link>

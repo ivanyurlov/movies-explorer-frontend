@@ -6,6 +6,11 @@ import '../Login/Login.css';
 
 function Profile(props) {
   const [currentUser, setCurrentUser] = React.useState({});
+  const [isEditProfileDisabled, setIsEditProfileDisabled] = React.useState(true);
+
+  function handleEditProfile() {
+    setIsEditProfileDisabled(false);
+  }
 
   return (
     <div className="login">
@@ -23,7 +28,9 @@ function Profile(props) {
                 //onChange={handleChange} 
                 id="name" 
                 autoComplete="off" 
-                type="text" name="name" 
+                type="text" name="name"
+                placeholder="Имя"
+                minLength="2" maxLength="30"
                 required 
               />
             </div>
@@ -38,15 +45,24 @@ function Profile(props) {
                 //onChange={handleChange} 
                 id="email" 
                 autoComplete="off" 
-                type="email" name="email" 
+                type="email" name="email"
+                placeholder="E-mail" 
                 required 
               />
             </div>
-            <span className="login__input-error login__input-error_visible">Что-то пошло не так</span>
+            <span className="login__input-error login__input-error_hidden"></span>
           </div>
-          <button className="login__save-button login__save-button_edit" type="submit">Редактировать</button>
+          <span className="login__edit-error login__edit-error_hidden"></span>
+          {isEditProfileDisabled ? (
+            <>
+              <button className="login__button login__button_edit" type="submit" onClick={handleEditProfile}>Редактировать</button>
+              <Link to="/" className="login__link login__link_signout" onClick={props.onSignOut}>Выйти из аккаунта</Link>
+            </>
+          ) : (
+            <button className={`login__save-button login__save-button_edit ${!props.isValid ? "login__save-button_disabled" : ""}`} type="submit">Сохранить</button>
+          )}
         </form>
-        <Link to="/" className="login__save-button login__save-button_signout" onClick={props.onSignOut}>Выйти из аккаунта</Link>
+        
       </div>
     </div>
   )
