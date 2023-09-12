@@ -1,0 +1,385 @@
+.login {
+  max-width: 1280px;
+  background: #FFFFFF;
+  margin: 0 auto;
+  padding: 0 0 40px;
+}
+
+@media (max-width: 520px) {
+  .login {
+    padding: 0 0 30px;
+  }
+}
+
+.login__container {
+  max-width: 396px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto 0;
+  padding: 0;
+}
+
+@media (max-width: 520px) {
+  .login__container {
+    max-width: 260px;
+    margin: 31px auto 0;
+  }
+}
+
+.login__container_modify {
+  max-width: 410px;
+  margin: 74px auto 0;
+}
+
+@media (max-width: 850px) {
+  .login__container_modify {
+    margin: 233px auto 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .login__container_modify {
+    max-width: 260px;
+    margin: 70px auto 0;
+  }
+}
+
+.login__title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000000;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 520px) {
+  .login__title {
+    text-align: center;
+  }
+}
+
+.login__title_modify {
+  text-align: center;
+}
+
+.login__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 40px 0 16px;
+  padding: 0;
+}
+
+@media (max-width: 520px) {
+  .login__form {
+    margin: 80px 0 14px;
+  }
+}
+
+.login__form_modify {
+  margin: 123px 0 0;
+}
+
+@media (max-width: 850px) {
+  .login__form_modify {
+    margin: 96px auto 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .login__form_modify {
+    margin: 80px auto 0;
+  }
+}
+
+.login__item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 7px;
+}
+
+.login__item:last-of-type {
+  margin-bottom: 0;
+}
+
+.login__field {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 0 0 16px;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.login__field_modify {
+  border-bottom: none;
+}
+
+.login__label {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #A0A0A0;
+  margin: 0 0 10px;
+  padding: 0;
+}
+
+.login__label_modify {
+  width: 15%;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  color: #000000;
+  margin: 0;
+}
+
+.login__input {
+  outline: none;
+  border: none;
+  font-family: inherit;
+  background: #F9F9F9;
+  border-radius: 8px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: #000000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0 0 10px;
+  padding: 14px 14px;
+}
+
+.login__input:focus {
+  outline: none;
+}
+
+.login__input_modify {
+  width: 85%;
+  background: #FFFFFF;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: right;
+  color: #000000;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.login__input-error {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.login__input-error_hidden {
+  box-sizing: border-box;
+  min-height: 12px;
+}
+
+.login__input-error_visible {
+  min-height: 12px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  color: #EE3465;
+  display: block;
+}
+
+.login__save-button {
+  background: #FF6838;
+  border: none;
+  border-radius: 3px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #FFFFFF;
+  cursor: pointer;
+  margin: 69px 0 0;
+  padding: 14px 125px;
+  transition: opacity 0.3s linear;
+}
+
+.login__save-button:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 520px) {
+  .login__save-button {
+    font-size: 12px;
+    line-height: 14px;
+    margin: 157px 0 0;
+    padding: 14px 67px;
+  }
+}
+
+.login__save-button_disabled {
+  background: #F8F8F8;
+  color: #C2C2C2;
+  cursor: default;
+  transition: none;
+}
+
+.login__save-button_disabled:hover {
+  opacity: 1;
+}
+
+.login__save-button_modify {
+  margin: 157px 0 0;
+}
+
+@media (max-width: 520px) {
+  .login__save-button_modify {
+    margin: 245px 0 0;
+  }
+}
+
+.login__save-button_edit {
+  margin: 20px 0 0;
+}
+
+@media (max-width: 520px) {
+  .login__save-button_edit {
+    margin: 180px 0 0;
+  }
+}
+
+.login__button {
+  background: #FF6838;
+  border: none;
+  border-radius: 3px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #FFFFFF;
+  cursor: pointer;
+  margin: 20px 0 0;
+  padding: 14px 125px;
+  transition: opacity 0.3s linear;
+}
+
+.login__button:hover {
+  opacity: 0.8;
+}
+
+@media (max-width: 520px) {
+  .login__button {
+    font-size: 12px;
+    line-height: 14px;
+    margin: 108px 0 0;
+    padding: 14px 67px;
+  }
+}
+
+.login__button_disabled {
+  background: #F8F8F8;
+  color: #C2C2C2;
+  cursor: default;
+  transition: none;
+}
+
+.login__button_disabled:hover {
+  opacity: 1;
+}
+
+.login__button_edit {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  color: #000000;
+  background: #FFFFFF;
+  margin: 20px 0 0;
+  padding: 0;
+}
+
+@media (max-width: 850px) {
+  .login__button_edit {
+    margin: 10px 0 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .login__button_edit {
+    font-size: 12px;
+    line-height: 14px;
+    margin: 178px 0 0;
+  }
+}
+
+.login__caption {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #A0A0A0;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 520px) {
+  .login__caption {
+    font-size: 12px;
+    line-height: 14px;
+  }
+}
+
+.login__link {
+  color: #FF6838;
+  text-decoration: none;
+  margin: 0 0 0 6px;
+  padding: 0;
+  transition: opacity 0.3s linear;
+}
+
+.login__link:hover {
+  opacity: 0.7;
+}
+
+.login__link_signout {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #EE3465;
+  margin: 16px 0 0;
+}
+
+@media (max-width: 520px) {
+  .login__link_signout {
+    font-size: 12px;
+    line-height: 14px;
+  }
+}
+
+.login__edit-error {
+  display: block;
+  text-align: center;
+  margin: 160px 0 0;
+  padding: 0;
+}
+
+.login__edit-error_hidden {
+  box-sizing: border-box;
+  min-height: 13px;
+}
+
+.login__edit-error_visible {
+  min-height: 13px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: #EE3465;
+  display: block;
+}
