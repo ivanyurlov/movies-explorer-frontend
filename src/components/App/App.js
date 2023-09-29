@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 
 import './App.css';
 import Header from '../Header/Header';
@@ -8,45 +8,136 @@ import Footer from '../Footer/Footer';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
 import Profile from '../Profile/Profile';
-//import ProtectedRoute from '../ProtectedRoute';
+import ProtectedRoute from '../ProtectedRoute';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import BurgerNavBar from '../BurgerNavBar/BurgerNavBar';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import * as Auth from '../../utils/Auth';
+import mainApi from '../../utils/MainApi';
+import { loginErrors } from '../../utils/customErrors';
+
 
 
 function App() {
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [isBurgerNavBarOpen, setIsBurgerNavBarOpen] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
+  const [favoriteMovies, setFavoriteMovies] = React.useState(JSON.parse(localStorage.getItem('savedMovies')) || []);
+  const [savedId, setSavedId] = React.useState('');
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [isRegister, setIsRegister] = React.useState(false);
+  const [isEditUser, setIsEditUser] = React.useState(false);
+  const [textError, setTextError] = React.useState('');
   const location = useLocation();
+  const navigate = useNavigate();
+  const path = useNavigate();
 
+  React.useEffect(() => {
+    getUserInfo();
+  }, [isLoggedIn]);
+
+  function getUserInfo() {
+    const jwt = localStorage.getItem("jwt");
+    mainApi.getUserInfo(jwt)
+    .then((currentUser) => {
+      setCurrentUser(currentUser);
+    })
+    .catch((error) => {
+      console.error(`Ошибка при загрузке профиля: ${error}`);
+    });
+  }
 
   function closeAllPopups() {
     setIsInfoTooltipOpen(false);
     setIsBurgerNavBarOpen(false); 
   }
 
-  //function showCheckResult() {
-  //  setIsInfoTooltipOpen(true);
-  //}
+  function showCheckResult() {
+    setIsInfoTooltipOpen(true);
+  }
 
   function handleBurgerButtonClick() {
     setIsBurgerNavBarOpen(true);
   }
 
-  //function successRegister() {
-  //  setIsRegister(true);
-  //}
+  function successRegister() {
+    setIsRegister(true);
+  }
 
-  //function unsuccessRegister() {
-  //  setIsRegister(false);
-  //}
+  function unsuccessRegister() {
+    setIsRegister(false);
+  }
+
+  function successEditUser() {
+    setIsEditUser(true);
+  }
+
+  function unsuccessEditUser() {
+    setIsEditUser(false);
+  }
+
+  function onSignOut() {
+    setIsLoggedIn(false);
+    localStorage.removeItem("jwt");
+    localStorage.removeItem('savedMovies');
+    localStorage.removeItem('userMovies');
+    localStorage.removeItem('keyword');
+    localStorage.removeItem('shorts');
+  }
+
+  function checkToken() {
+    const jwt = localStorage.getItem("jwt");
+    Auth.getContent(jwt)
+    .then((res) => {
+      if (!res) {
+        return;
+      }
+      setIsLoggedIn(true);
+      navigate(path);
+    })
+    .catch((error) => {
+      navigate("/");
+      setIsLoggedIn(false);
+      setTextError(loginErrors(error));
+    });
+  }
+ 
+  React.useEffect(() => {
+    checkToken();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function handleAddMovieToggle(movie, isSaved) {
+    const jwt = localStorage.getItem("jwt");
+    if (!isSaved) {
+      mainApi.addMovie(movie, jwt)
+      .then((newMovie) => {
+        Object.entries(newMovie).forEach((key) => {
+          if (!key[1]) {
+            newMovie[key[0]] = '...';
+          }
+        });
+        setSavedId(newMovie._id);
+        setFavoriteMovies([newMovie, ...favoriteMovies]);
+        localStorage.setItem('savedMovies', JSON.stringify([newMovie, ...favoriteMovies]));
+      })
+      .catch((error) => {
+        console.error(`Ошибка при добавлении фильма: ${error}`);
+      })
+    } else {
+      mainApi.deleteMovie(savedId, jwt)
+      .then(() => {
+        setFavoriteMovies((favoriteMovies) => favoriteMovies.filter((c) => (c._id !== savedId)));
+        localStorage.setItem('savedMovies', JSON.stringify(favoriteMovies.filter((c) => (c._id !== savedId))));
+      })
+      .catch((error) => {
+        console.error(`Ошибка при удалении фильма: ${error}`);
+      })
+    }
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -55,7 +146,6 @@ function App() {
           {(location.pathname === "/" || location.pathname === "/movies" || location.pathname === "/saved-movies" || location.pathname === "/signup" || location.pathname === "/signin" || location.pathname === "/profile") && 
           <Header
             isLoggedIn = {isLoggedIn}
-            //onSignOut = {onSignOut}
             onBurgerNavBar = {handleBurgerButtonClick}
             isOpen = {isBurgerNavBarOpen}
           />}
@@ -63,43 +153,54 @@ function App() {
             <Route path="/" element={<Main />} />
             <Route path="/signup" element={
               <Register
-                //successRegister = {successRegister}
-                //unsuccessRegister = {unsuccessRegister}
-                //showCheckResult = {showCheckResult}
+                successRegister = {successRegister}
+                unsuccessRegister = {unsuccessRegister}
+                showCheckResult = {showCheckResult}
+                setTextError = {setTextError}
               />
             } />
             <Route path="/signin" element={
               <Login
-                //unsuccessRegister = {unsuccessRegister}
-                //handleLogin = {() => setIsLoggedIn(true)}
-                //showCheckResult = {showCheckResult}
+                unsuccessRegister = {unsuccessRegister}
+                handleLogin = {() => setIsLoggedIn(true)}
+                showCheckResult = {showCheckResult}
+                setTextError = {setTextError}
               />
             } />
             <Route path="*" element={<PageNotFound />} />
             <Route path="/movies" element={
-              //<ProtectedRoute isLoggedIn={isLoggedIn} element={
+              <ProtectedRoute isLoggedIn={isLoggedIn} element={
                 <Movies
-                  isLoggedIn = {isLoggedIn}
-                  isLoading = {isLoading}
+                  favoriteMovies = {favoriteMovies}
+                  setFavoriteMovies = {setFavoriteMovies}
+                  setSavedId = {setSavedId}
+                  savedId = {savedId}
+                  onAddMovieToggle = {handleAddMovieToggle}
                 />
               } /> 
-            {/*} />*/}
+            } />
             <Route path="/saved-movies" element={
-              //<ProtectedRoute isLoggedIn={isLoggedIn} element={
+              <ProtectedRoute isLoggedIn={isLoggedIn} element={
                 <SavedMovies
-                 isLoggedIn = {isLoggedIn}
+                  favoriteMovies = {favoriteMovies}
+                  setFavoriteMovies = {setFavoriteMovies}
+                  setSavedId = {setSavedId}
+                  savedId = {savedId}
+                  onAddMovieToggle = {handleAddMovieToggle}
                 />
               } /> 
-            {/*} />*/}
+            } />
             <Route path="/profile" element={
-              //<ProtectedRoute isLoggedIn={isLoggedIn} element={
+              <ProtectedRoute isLoggedIn={isLoggedIn} element={
                 <Profile
-                  //unsuccessRegister = {unsuccessRegister}
-                  //handleLogin = {() => setIsLoggedIn(true)}
-                  //showCheckResult = {showCheckResult}
-                  //onSignOut = {onSignOut}
+                  successEditUser = {successEditUser}
+                  unsuccessEditUser = {unsuccessEditUser}
+                  setCurrentUser = {setCurrentUser}
+                  showCheckResult = {showCheckResult}
+                  onSignOut = {onSignOut}
+                  setTextError = {setTextError}
                 />
-              //} /> 
+              } /> 
             } />
           </Routes>
           {(location.pathname === "/" || location.pathname === "/movies" || location.pathname === "/saved-movies") && <Footer />}
@@ -110,13 +211,15 @@ function App() {
           />}
           <InfoTooltip
             isRegister = {isRegister}
+            isLoggedIn = {isLoggedIn}
+            isEditUser = {isEditUser}
             isOpen = {isInfoTooltipOpen}
             onClose = {closeAllPopups}
+            textError = {textError}
           />
         </div>
       </div>
     </CurrentUserContext.Provider>
-    
   );
 }
 
