@@ -29,4 +29,4 @@
 ## Ссылка на макет:
 * Ссылка на макет в Figma: https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/light-1?type=design&node-id=1-298&mode=design&t=knxWoc2BN8Jesdvp-0
 ## Ссылка на пул реквест: 
-* https://github.com/ivanyurlov/movies-explorer-frontend/pull/2
+* Ссылка на пул реквест: https://github.com/ivanyurlov/movies-explorer-frontend/pull/2
