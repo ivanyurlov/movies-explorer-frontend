@@ -43,7 +43,7 @@ function Movies(props) {
   }
 
   function handleSearchMovies(keyword, shorts) {
-    const storedMovies = JSON.parse(localStorage.getItem('movies')) || [];
+    const storedMovies = JSON.parse(localStorage.getItem('movies'));
     if (!storedMovies) {
       setIsLoading(true);
       moviesApi.getInitialMovies()
