@@ -17,12 +17,16 @@ function Profile(props) {
     setValues(currentUser);
   }, [currentUser, setValues])
 
-  function handleEditProfile() {
+  React.useEffect(() => {
     if (currentUser.name !== values.name || currentUser.email !== values.email) {
       setIsEditProfileDisabled(false);
     } else {
       setIsEditProfileDisabled(true);
     };
+  }, [currentUser, values.name, values.email])
+
+  function handleEditProfile() {
+    setIsEditProfileDisabled(false);
   }
 
   function handleSubmit(event) {
@@ -62,7 +66,7 @@ function Profile(props) {
                 type="text" name="name"
                 placeholder="Имя"
                 minLength="2" maxLength="30"
-                disabled={!isEditProfileDisabled}
+                disabled={isEditProfileDisabled}
                 pattern="^[A-Za-zА-Яа-я\\s]{2,30}$"
                 required 
               />
@@ -80,14 +84,14 @@ function Profile(props) {
                 autoComplete="off" 
                 type="email" name="email"
                 placeholder="E-mail"
-                disabled={!isEditProfileDisabled}
+                disabled={isEditProfileDisabled}
                 pattern="^[a-zA-Z0-9\.\-]+@[a-zA-Z0-9\.\-]+\.[a-zA-Z0-9]+$"
                 required 
               />
             </div>
             <span className={`login__input-error login__input-error_hidden ${errors?.email && "login__input-error_visible"}`}>{errors.email}</span>
           </div>
-            <span className="login__edit-error login__edit-error_hidden">{errors?.email}</span>
+            <span className="login__edit-error login__edit-error_hidden"></span>
           {isEditProfileDisabled ? (
             <>
               <button className="login__button login__button_edit" type="button" onClick={handleEditProfile}>Редактировать</button>

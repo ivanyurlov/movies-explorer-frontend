@@ -14,13 +14,7 @@ function MoviesCard(props) {
   }
 
   function handleAddMovieClick() {
-    if (!isSaved) {
-      setIsSaved(true);
-      props.onAddMovieToggle(props.movie, isSaved);
-    } else {
-      setIsSaved(false);
-      props.onAddMovieToggle(props.movie, isSaved);
-    }
+    props.onAddMovieToggle(props.movie, isSaved, setIsSaved);
   }
 
   React.useEffect(() => {
@@ -32,6 +26,7 @@ function MoviesCard(props) {
           moviesSaved.forEach(item => {
           if (item.movieId === props.movie.id || item._id === props.movie._id) {
             props.setSavedId(item._id);
+            console.log(item._id);
             setIsSaved(true);
           }
         });

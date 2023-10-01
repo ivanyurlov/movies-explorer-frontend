@@ -1,33 +1,16 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import './Login.css';
 import useFormValidation from '../../utils/useFormValidation';
-import * as Auth from '../../utils/Auth';
-import { loginErrors } from '../../utils/customErrors';
 
 
 function Login(props) {
-  const { values, handleChange, errors, isValid, resetForm } = useFormValidation();
-  const navigate = useNavigate();
+  const { values, handleChange, errors, isValid } = useFormValidation();
 
   function handleSubmit(event) {
     event.preventDefault();
-    Auth.authorize(values.email, values.password)
-    .then((data) => {
-      if (data.token) {
-        localStorage.setItem("jwt", data.token);
-        props.handleLogin();
-        navigate("/movies", {replace: true});
-      }
-    })
-    .catch((error) => {
-      console.error(`Ошибка при авторизации: ${error}`);
-      props.setTextError(loginErrors(error));
-      props.unsuccessRegister();
-      props.showCheckResult();
-      resetForm();
-    })
+    props.onLogin(values.email, values.password);
   }
 
   return (

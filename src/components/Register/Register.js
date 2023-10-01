@@ -15,8 +15,7 @@ function Register(props) {
     Auth.register(values.name, values.email, values.password)
     .then((data) => {
       props.successRegister();
-      props.showCheckResult();
-      props.setTextError('Вы успешно зарегистрировались!');
+      props.onLogin(values.email, values.password);
     })
     .catch((error) => {
       props.setTextError(registerErrors(error));

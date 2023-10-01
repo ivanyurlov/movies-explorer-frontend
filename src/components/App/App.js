@@ -79,6 +79,23 @@ function App() {
     setIsEditUser(false);
   }
 
+  function onLogin(email, password) {
+    Auth.authorize(email, password)
+    .then((data) => {
+      if (data.token) {
+        localStorage.setItem("jwt", data.token);
+        setIsLoggedIn(true);
+        navigate("/movies", {replace: true});
+      }
+    })
+    .catch((error) => {
+      console.error(`Ошибка при авторизации: ${error}`);
+      setTextError(loginErrors(error));
+      unsuccessRegister();
+      showCheckResult();
+    })
+  }
+
   function onSignOut() {
     setIsLoggedIn(false);
     localStorage.removeItem("jwt");
@@ -110,7 +127,7 @@ function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleAddMovieToggle(movie, isSaved) {
+  function handleAddMovieToggle(movie, isSaved, setIsSaved) {
     const jwt = localStorage.getItem("jwt");
     if (!isSaved) {
       mainApi.addMovie(movie, jwt)
@@ -123,6 +140,7 @@ function App() {
         setSavedId(newMovie._id);
         setFavoriteMovies([newMovie, ...favoriteMovies]);
         localStorage.setItem('savedMovies', JSON.stringify([newMovie, ...favoriteMovies]));
+        setIsSaved(true);
       })
       .catch((error) => {
         console.error(`Ошибка при добавлении фильма: ${error}`);
@@ -130,6 +148,7 @@ function App() {
     } else {
       mainApi.deleteMovie(savedId, jwt)
       .then(() => {
+        setIsSaved(false);
         setFavoriteMovies((favoriteMovies) => favoriteMovies.filter((c) => (c._id !== savedId)));
         localStorage.setItem('savedMovies', JSON.stringify(favoriteMovies.filter((c) => (c._id !== savedId))));
       })
@@ -151,22 +170,23 @@ function App() {
           />}
           <Routes>
             <Route path="/" element={<Main />} />
-            <Route path="/signup" element={
+            {!isLoggedIn && <Route path="/signup" element={
               <Register
                 successRegister = {successRegister}
                 unsuccessRegister = {unsuccessRegister}
                 showCheckResult = {showCheckResult}
                 setTextError = {setTextError}
+                onLogin = {onLogin}
               />
-            } />
-            <Route path="/signin" element={
+            } />}
+            {!isLoggedIn && <Route path="/signin" element={
               <Login
                 unsuccessRegister = {unsuccessRegister}
-                handleLogin = {() => setIsLoggedIn(true)}
                 showCheckResult = {showCheckResult}
                 setTextError = {setTextError}
+                onLogin = {onLogin}
               />
-            } />
+            } />}
             <Route path="*" element={<PageNotFound />} />
             <Route path="/movies" element={
               <ProtectedRoute isLoggedIn={isLoggedIn} element={
