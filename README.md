@@ -5,6 +5,8 @@
 * верстка по макету в Figma;
 * Flexbox;
 * Grid Layout;
+* Webpack;
+* React JS(Функциональные компоненты, хуки);
 * адаптивная и "резиновая" верстка;
 * различные способы позиционирования элементов;
 * оформление файловой структуры CSS по правилам Nested БЭМ;
@@ -26,3 +28,5 @@
 * Адрес репозитория: https://github.com/ivanyurlov/movies-explorer-frontend
 ## Ссылка на макет:
 * Ссылка на макет в Figma: https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/light-1?type=design&node-id=1-298&mode=design&t=knxWoc2BN8Jesdvp-0
+## Ссылка на пул реквест: 
+* Ссылка на пул реквест: https://github.com/ivanyurlov/movies-explorer-frontend/pull/2

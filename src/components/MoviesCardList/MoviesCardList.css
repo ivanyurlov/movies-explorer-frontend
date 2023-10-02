@@ -61,7 +61,11 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
-  color: #FF6838;
-  margin: 40px 0 60px;
+  color: #EE3465;
+  margin: 40px 0 190px;
   padding: 0;
+}
+
+.movies__text_hidden {
+  min-height: 18px;
 }
