@@ -17,34 +17,30 @@ function Profile(props) {
     setValues(currentUser);
   }, [currentUser, setValues])
 
-  React.useEffect(() => {
-    if (currentUser.name !== values.name || currentUser.email !== values.email) {
-      setIsEditProfileDisabled(false);
-    } else {
-      setIsEditProfileDisabled(true);
-    };
-  }, [currentUser, values.name, values.email])
-
   function handleEditProfile() {
     setIsEditProfileDisabled(false);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    const jwt = localStorage.getItem("jwt");
-    mainApi.editUserInfo(values.name, values.email, jwt)
-    .then((currentUser) => {
-      props.successEditUser();
-      props.showCheckResult();
-      props.setCurrentUser(currentUser);
-      props.setTextError('Вы успешно изменили свои данные!');
-    })
-    .catch((error) => {
-      props.setTextError(profileErrors(error));
-      props.unsuccessEditUser();
-      props.showCheckResult();
+    if (currentUser.name !== values.name || currentUser.email !== values.email) {
+      setIsEditProfileDisabled(false);
+      const jwt = localStorage.getItem("jwt");
+      mainApi.editUserInfo(values.name, values.email, jwt)
+      .then((currentUser) => {
+        props.successEditUser();
+        props.showCheckResult();
+        props.setCurrentUser(currentUser);
+        props.setTextError('Вы успешно изменили свои данные!');
+      })
+      .catch((error) => {
+        props.setTextError(profileErrors(error));
+        props.unsuccessEditUser();
+        props.showCheckResult();
+      })
+    } else {
       setIsEditProfileDisabled(true);
-    })
+    }
   }
 
   return (
